@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NHN Dooray 업무등록</title>
+    <link rel="stylesheet" type="text/css" href="/dist/idp/1700712848/static/css/reset.css"/>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header button {
+            border: none;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        header button img {
+            height: 24px; /* Adjust the height of the image-like text */
+            margin-right: 5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a, .search-input {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+        }
+
+        main {
+            display: flex;
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input {
+            width: 200px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .search-button, nav a {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover, nav a:hover {
+            background-color: #555; /* Darker shade on hover */
+        }
+
+        aside {
+            display: flex;
+            background-color: #ddd;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 40%; /* Adjust the width as needed */
+            margin-bottom: 20px;
+        }
+
+        .additional-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%; /* Adjust the width as needed */
+            margin-bottom: 20px;
+        }
+
+        .buttons-group button,
+        .additional-buttons button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            display: block;
+        }
+
+        .buttons-group button:hover,
+        .additional-buttons button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .new-task-section {
+            flex: 1;
+        }
+
+        .new-task-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .new-task-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .new-task-form select,
+        .new-task-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .new-task-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .new-task-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <button onclick="window.location.href='/home'">
+        Dooray! | 홈
+    </button>
+    <nav>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="검색어 입력"/>
+            <button class="search-button">검색</button>
+        </div>
+        <a href="/member-edit">회원수정</a>
+        <a href="/logout">로그아웃</a>
+    </nav>
+</header>
+
+<main>
+    <aside>
+        <div class="buttons-group">
+            <button onclick="location.href='/home'">&#127968;</button>
+            <button onclick="location.href='/button1'">&#128193;</button>
+            <button onclick="location.href='/button3'">&#128221;</button>
+        </div>
+
+        <div class="additional-buttons">
+            <button onclick="location.href='/new-task'">새업무</button>
+            <button onclick="location.href='/all-tasks'">전체업무</button>
+            <button onclick="location.href='/my-comments'">내가 쓴 댓글</button>
+        </div>
+    </aside>
+
+    <div class="new-task-section">
+        <h2>새 업무 등록</h2>
+        <div class="new-task-form">
+            <label for="taskUserId">User Id:</label>
+            <input type="text" id="taskUserId" name="taskUserId" value="${user.id}" readonly>
+
+            <label for="taskTitle">Title:</label>
+            <input type="text" id="taskTitle" name="taskTitle" required>
+
+            <label for="taskMilestone">Milestone:</label>
+            <select id="taskMilestone" name="taskMilestone" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <label for="taskTag">Tag:</label>
+            <select id="taskTag" name="taskTag" multiple required>
+                <option value="1">Tag 1</option>
+                <option value="2">Tag 2</option>
+                <option value="3">Tag 3</option>
+            </select>
+
+            <label for="taskContent">Content:</label>
+            <input type="text" id="taskContent" name="taskContent">
+
+            <button type="submit">저장</button>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2024 Dooray! All rights reserved.</p>
+</footer>
+</body>
+</html>
