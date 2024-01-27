@@ -2,6 +2,7 @@ package com.nhnacademy.gateway.adapter;
 
 
 import com.nhnacademy.gateway.config.TaskAdaptorProperties;
+import com.nhnacademy.gateway.dto.common.DeleteResponse;
 import com.nhnacademy.gateway.dto.task.TaskDto;
 import com.nhnacademy.gateway.dto.task.TaskRegisterAndModifyRequest;
 import java.util.List;
@@ -54,7 +55,7 @@ public class TaskAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<TaskRegisterAndModifyRequest> request = new HttpEntity<>(registerRequest, headers);
         ResponseEntity<TaskDto> responseEntity =
-                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/accounts", HttpMethod.POST, request,
+                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/tasks/", HttpMethod.POST, request,
                         new ParameterizedTypeReference<>() {
                         });
         if (responseEntity.getStatusCode() != HttpStatus.CREATED) {
@@ -67,8 +68,19 @@ public class TaskAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<TaskRegisterAndModifyRequest> request = new HttpEntity<>(registerRequest, headers);
         ResponseEntity<TaskDto> responseEntity =
-                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/accounts", HttpMethod.PUT, request,
+                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/tasks/", HttpMethod.PUT, request,
                         new ParameterizedTypeReference<>() {
+                        });
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void deleteTask(Long taskId) {
+        ResponseEntity<TaskDto>
+                responseEntity =
+                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/tasks/" + taskId, HttpMethod.DELETE,
+                        null, new ParameterizedTypeReference<>() {
                         });
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException();

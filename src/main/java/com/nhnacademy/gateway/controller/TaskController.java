@@ -1,8 +1,11 @@
 package com.nhnacademy.gateway.controller;
 
+import com.nhnacademy.gateway.adapter.ProjectMilestoneAdaptor;
 import com.nhnacademy.gateway.adapter.TaskAdaptor;
+import com.nhnacademy.gateway.adapter.TaskTagAdaptor;
 import com.nhnacademy.gateway.dto.task.TaskDto;
 import com.nhnacademy.gateway.dto.task.TaskRegisterAndModifyRequest;
+import com.nhnacademy.gateway.dto.tasktag.TaskTagNameResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,10 +23,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskAdaptor taskAdaptor;
+    private final TaskTagAdaptor taskTagAdaptor;
+    private final ProjectMilestoneAdaptor projectMilestoneAdaptor;
 
     @GetMapping("/tasks/modifyform/{id}")
     public String taskModifyForm(@PathVariable("id") Long taskId, Model model) {
-        model.addAttribute("task", taskAdaptor.getTask(taskId));
+        //TODO : DTO projection으로 projectid를 가져와야함
+        TaskDto task = taskAdaptor.getTask(taskId);
+        model.addAttribute("projectMilestone",
+                projectMilestoneAdaptor.getAllProjectMilestone(task.getProject().getId()));
+        model.addAttribute("projectTag", null);
+        model.addAttribute("task", task);
         return "/project/taskModifyForm";
     }
 
@@ -37,6 +47,8 @@ public class TaskController {
     @GetMapping("/tasks/{id}")
     public String getTask(@PathVariable("id") Long taskId, Model model) {
         TaskDto taskDto = taskAdaptor.getTask(taskId);
+        List<TaskTagNameResponse> taskTag = taskTagAdaptor.getAllTaskPreview(taskId);
+
         model.addAttribute("task", taskDto);
         return "";
     }
@@ -55,7 +67,7 @@ public class TaskController {
 
     @DeleteMapping("/tasks/{id}")
     public String deleteTask(@PathVariable("id") Long taskId) {
-
+        taskAdaptor.deleteTask(taskId);
         return "redirect:/project/taskAllviewForm";
     }
 }

@@ -33,5 +33,4 @@ public class ProjectController {
         return "project/home";
     }
 
-
 }
