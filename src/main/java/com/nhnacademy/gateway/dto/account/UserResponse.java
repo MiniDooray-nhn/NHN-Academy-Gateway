@@ -1,5 +1,6 @@
 package com.nhnacademy.gateway.dto.account;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
-    private String userId;
-    private String password;
+public class UserResponse {
+
+    String id;
+
+    String password;
+
+    String email;
+
+    String name;
+
+    LocalDateTime createdAt;
 
 }
