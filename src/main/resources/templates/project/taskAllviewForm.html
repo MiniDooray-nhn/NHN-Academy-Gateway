@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta content="ie=edge" http-equiv="x-ua-compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NHN Dooray 업무 목록</title>
+    <title>NHN Dooray 프로젝트 등록 </title>
     <link rel="stylesheet" type="text/css" href="/dist/idp/1700712848/static/css/reset.css"/>
 
     <style>
@@ -96,6 +96,7 @@
             display: flex;
             background-color: #ddd;
             padding: 20px;
+            gap: 20px;
         }
 
         .buttons-group {
@@ -112,40 +113,68 @@
             gap: 20px;
             width: 100%; /* Adjust the width as needed */
             margin-bottom: 20px;
-
         }
 
-        .buttons-group button {
-            width: 100%;
+        .buttons-group button,
+        .additional-buttons button {
+            width: 110%;
             padding: 10px;
             border: none;
-            background-color: #c0c0c0;
-            color: #fff;
             cursor: pointer;
-            text-align: left; /* Align button text to the left */
-            display: block; /* Make the button a block element to occupy full width */
+            text-align: left;
+            display: block;
         }
 
-        .additional-buttons button {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            background-color: #ffffff;
-            /*color: #fff;*/
-            cursor: pointer;
-            text-align: left; /* Align button text to the left */
-            display: block; /* Make the button a block element to occupy full width */
-        }
-
-        .buttons-group button:hover, .additional-buttons button:hover {
+        .buttons-group button:hover,
+        .additional-buttons button:hover {
             background-color: #0056b3; /* Darker shade on hover */
         }
 
-        footer {
+        .footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px;
+        }
+
+        .new-project-section {
+            flex: 1;
+        }
+
+        .new-project-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .new-project-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .new-project-form select,
+        .new-project-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .new-project-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .new-project-form button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -174,41 +203,36 @@
         </div>
 
         <div class="additional-buttons">
-            <button onclick="location.href='/new-task'">새업무</button>
-            <button onclick="location.href='/all-tasks'">전체업무</button>
-            <button onclick="location.href='/my-comments'">내가 쓴 댓글</button>
+            <button onclick="location.href='/post/projects'">새프로젝트</button>
+            <button onclick="location.href='/get/projects'">프로젝트 목록</button>
+
         </div>
     </aside>
 
     <div>
-        <h3>전체 업무 목록</h3>
+        <h3>프로젝트 목록</h3>
         <table>
             <thead>
             <tr>
                 <th>NO.</th>
                 <th>User id</th>
                 <th>Title</th>
+                <th>Status</th>
                 <th>createdAt</th>
-                <th>modify</th>
-                <th>delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task, i: ${taskList}">
+            <tr th:each="project, i: ${projectList}">
                 <td th:text="${i.count}"></td>
-                <td th:text="${task.userId}"></td>
+                <td th:text="${project.userId}"></td>
                 <td>
-                    <a th:href="@{/task/{id} (id=${task.id})}" th:text="${task.title}"></a>
+                    <a th:href="@{/project/{id} (id=${project.id})}" th:text="${project.title}"></a>
                 </td>
-                <td th:text="${task.createdAt}"></td>
+                <td th:text="${project.projectStatus.statusName}"></td>
+                <td th:text="${project.createdAt}"></td>
                 <td>
-                    <form th:method="get" th:action="@{/tasks/modifyform/{id} (id=${task.id})}">
+                    <form th:method="get" th:action="@{/projects/modifyform/{id} (id=${project.id})}">
                         <button type="submit">Modify</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:method="delete" th:action="@{/task/{id} (id=${task.id})}">
-                        <button type="submit">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -217,7 +241,8 @@
     </div>
 </main>
 
-<footer>
+
+<footer class="footer">
     <p>&copy; 2024 Dooray! All rights reserved.</p>
 </footer>
 </body>
