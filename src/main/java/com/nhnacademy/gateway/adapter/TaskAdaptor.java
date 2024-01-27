@@ -2,8 +2,8 @@ package com.nhnacademy.gateway.adapter;
 
 
 import com.nhnacademy.gateway.config.TaskAdaptorProperties;
-import com.nhnacademy.gateway.domain.task.TaskDto;
-import com.nhnacademy.gateway.domain.task.TaskRegisterAndModifyRequest;
+import com.nhnacademy.gateway.dto.task.TaskDto;
+import com.nhnacademy.gateway.dto.task.TaskRegisterAndModifyRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

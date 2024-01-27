@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.domain;
+package com.nhnacademy.gateway.dto.task;
 
 import java.util.Date;
 import lombok.Data;

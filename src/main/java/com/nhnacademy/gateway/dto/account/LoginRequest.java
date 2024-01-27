@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.request.account;
+package com.nhnacademy.gateway.dto.account;
 
 
 import javax.validation.constraints.NotBlank;
