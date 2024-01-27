@@ -39,7 +39,7 @@ public class TaskAdaptor {
     public TaskDto getTask(Long id) {
         ResponseEntity<TaskDto>
                 responseEntity =
-                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/task/" + id, HttpMethod.GET,
+                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/tasks/" + id, HttpMethod.GET,
                         null, new ParameterizedTypeReference<>() {
                         }, id);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {

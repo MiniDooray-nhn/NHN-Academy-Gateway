@@ -202,12 +202,12 @@
                 </td>
                 <td th:text="${task.createdAt}"></td>
                 <td>
-                    <form method="put" action="@{/task/{id}/modify (id=${task.id})}">
+                    <form th:method="get" th:action="@{/tasks/modifyform/{id} (id=${task.id})}">
                         <button type="submit">Modify</button>
                     </form>
                 </td>
                 <td>
-                    <form method="delete" action="@{/task/{id}/delete (id=${task.id})}">
+                    <form th:method="delete" th:action="@{/task/{id} (id=${task.id})}">
                         <button type="submit">Delete</button>
                     </form>
                 </td>
