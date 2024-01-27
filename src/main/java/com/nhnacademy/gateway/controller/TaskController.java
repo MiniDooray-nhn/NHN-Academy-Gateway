@@ -44,13 +44,13 @@ public class TaskController {
     @PostMapping("/tasks")
     public String registerTask(@RequestBody TaskRegisterAndModifyRequest request) {
         taskAdaptor.createTask(request);
-        return "project/taskAllviewForm";
+        return "/project/taskAllviewForm";
     }
 
     @PutMapping("/tasks")
     public String modifyTask(@RequestBody TaskRegisterAndModifyRequest request) {
         taskAdaptor.modifyTask(request);
-        return "project/taskAllviewForm";
+        return "/project/taskAllviewForm";
     }
 
     @DeleteMapping("/tasks/{id}")
