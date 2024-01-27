@@ -1,6 +1,7 @@
 package com.nhnacademy.gateway.dto.task;
 
 import com.nhnacademy.gateway.dto.project.Project;
+import com.nhnacademy.gateway.dto.project.ProjectDto;
 import java.time.LocalDateTime;
 import lombok.Data;
 
