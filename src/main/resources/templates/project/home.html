@@ -170,7 +170,7 @@
         <div class="buttons-group">
             <button onclick="location.href='/home'">&#127968;</button>
             <button onclick="location.href='/project'">&#128193;</button>
-            <button onclick="location.href='/button3'">&#128221;</button>
+            <button onclick="location.href='/task'">&#128221;</button>
         </div>
 
         <div class="additional-buttons">
@@ -179,6 +179,37 @@
             <button onclick="location.href='/get/--'">내가 쓴 댓글</button>
         </div>
     </aside>
+
+    <div>
+        <h3>전체 프로젝트 목록</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>NO.</th>
+                <th>User id</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>createdAt</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="project, i: ${projectList}">
+                <td th:text="${i.count}"></td>
+                <td th:text="${project.userId}"></td>
+                <td>
+                    <a th:href="@{/project/{id} (id=${project.id})}" th:text="${project.title}"></a>
+                </td>
+                <td th:text="${project.projectStatus.statusName}"></td>
+                <td th:text="${project.createdAt}"></td>
+                <td>
+                    <form th:method="get" th:action="@{/projects/modifyform/{id} (id=${project.id})}">
+                        <button type="submit">Modify</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>
