@@ -201,6 +201,11 @@
                 </td>
                 <td th:text="${project.projectStatus.statusName}"></td>
                 <td th:text="${project.createdAt}"></td>
+                <td>
+                    <form th:method="get" th:action="@{/projects/modifyform/{id} (id=${project.id})}">
+                        <button type="submit">Modify</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
