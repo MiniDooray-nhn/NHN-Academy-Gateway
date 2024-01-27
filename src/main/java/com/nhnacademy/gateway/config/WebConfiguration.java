@@ -14,5 +14,6 @@ public class WebConfiguration {
                 .setReadTimeout(Duration.ofSeconds(5L))
                 .setConnectTimeout(Duration.ofSeconds(3L))
                 .build();
+
     }
 }
