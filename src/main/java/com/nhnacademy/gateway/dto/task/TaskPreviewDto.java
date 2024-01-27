@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.domain.task;
+package com.nhnacademy.gateway.dto.task;
 
 import lombok.Data;
 

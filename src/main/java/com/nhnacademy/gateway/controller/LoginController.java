@@ -1,7 +1,7 @@
 package com.nhnacademy.gateway.controller;
 
 
-import com.nhnacademy.gateway.request.account.LoginRequest;
+import com.nhnacademy.gateway.dto.account.LoginRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
