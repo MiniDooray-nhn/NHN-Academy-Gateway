@@ -1,20 +1,14 @@
 package com.nhnacademy.gateway.dto.project;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class ProjectRegisterAndModifyRequest {
-
     private String userId;
 
     private Integer projectStatusId;
 
     private String title;
+
 
 }
