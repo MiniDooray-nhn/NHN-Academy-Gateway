@@ -16,6 +16,8 @@ public class Account {
 
     private String name;
 
+    private String status;
+
     private Date createdAt;
 
 
