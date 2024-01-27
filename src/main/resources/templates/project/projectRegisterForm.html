@@ -209,7 +209,7 @@
             <button onclick="location.href='/get/milestone'">마일스톤 목록</button>
         </div>
     </aside>
-
+    <form method="post" th:action="@{/projects}">
     <div class="new-project-section">
         <h2>새 프로젝트 등록 </h2>
         <div class="new-project-form">
@@ -235,28 +235,27 @@
             <button type="submit">저장</button>
         </div>
     </div>
+    </form>
 
     <script>
         function addMemberField() {
             var membersContainer = document.getElementById('members-container');
 
-            // Create a new input field
             var newMemberInput = document.createElement('input');
             newMemberInput.type = 'text';
-            newMemberInput.name = 'projectMembers'; // You may want to set a unique name
+            newMemberInput.name = 'projectMembers';
             newMemberInput.placeholder = 'Enter Member Id';
 
-            // Create a new delete button
+
             var deleteButton = document.createElement('button');
             deleteButton.type = 'button';
             deleteButton.textContent = 'Remove';
             deleteButton.onclick = function () {
-                // Remove both the input field and the delete button when clicked
+
                 membersContainer.removeChild(newMemberInput);
                 membersContainer.removeChild(deleteButton);
             };
 
-            // Append the new input field and delete button to the container
             membersContainer.appendChild(newMemberInput);
             membersContainer.appendChild(deleteButton);
         }
