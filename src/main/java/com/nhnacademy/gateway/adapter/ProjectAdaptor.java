@@ -1,9 +1,9 @@
 package com.nhnacademy.gateway.adapter;
 
 import com.nhnacademy.gateway.config.TaskAdaptorProperties;
-import com.nhnacademy.gateway.dto.project.ProjectDto;
 import com.nhnacademy.gateway.dto.project.ProjectRegisterAndModifyRequest;
-import com.nhnacademy.gateway.dto.task.Account;
+import com.nhnacademy.gateway.dto.project.ProjectRegisterAndModifyResponse;
+import com.nhnacademy.gateway.dto.project.ProjectResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,8 +24,8 @@ public class ProjectAdaptor {
     private final TaskAdaptorProperties taskAdaptorProperties;
 
 
-    public List<ProjectDto> getProjectsUserRegistered(String userid) {
-        ResponseEntity<List<ProjectDto>>
+    public List<ProjectResponse> getProjectsUserRegistered(String userid) {
+        ResponseEntity<List<ProjectResponse>>
                 responseEntity =
                 restTemplate.exchange(taskAdaptorProperties.getAddress() + "/projects/user/" + userid, HttpMethod.GET,
                         null,
@@ -50,4 +50,26 @@ public class ProjectAdaptor {
             throw new RuntimeException();
         }
     }
+
+    public ProjectRegisterAndModifyResponse modifyProjectByRequestAndId(ProjectRegisterAndModifyRequest modifyRequest,
+                                                                        Long id) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<ProjectRegisterAndModifyRequest> request = new HttpEntity<>(modifyRequest, headers);
+
+        ResponseEntity<ProjectRegisterAndModifyResponse> responseEntity =
+                restTemplate.exchange(taskAdaptorProperties.getAddress() + "/projects/" + id, HttpMethod.PUT, request,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new RuntimeException();
+        }
+
+        return responseEntity.getBody();
+    }
+
+
 }
