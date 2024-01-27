@@ -1,11 +1,15 @@
 package com.nhnacademy.gateway.domain;
 
 import java.util.Date;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
+import lombok.NoArgsConstructor;
 
 @Data
 @Generated
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
     private String userId;

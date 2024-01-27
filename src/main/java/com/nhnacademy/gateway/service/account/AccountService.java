@@ -1,14 +1,17 @@
 package com.nhnacademy.gateway.service.account;
 
-import com.nhnacademy.gateway.domain.Account;
+import com.nhnacademy.gateway.adator.AccountAdaptor;
+import org.springframework.stereotype.Service;
 
-public interface AccountService {
 
-    Account createAccount(Account account);
+@Service
+public class AccountService {
 
-    Account getAccount(String userId);
+    private final AccountAdaptor accountAdaptor;
 
-    Account login(String userId, String password);
+    public AccountService(AccountAdaptor accountAdaptor) {
+        this.accountAdaptor = accountAdaptor;
+    }
 
 
 }

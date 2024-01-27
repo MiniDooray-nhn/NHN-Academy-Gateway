@@ -7,6 +7,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class AccountAdaptorProperties {
 
-
     private String address;
 }
