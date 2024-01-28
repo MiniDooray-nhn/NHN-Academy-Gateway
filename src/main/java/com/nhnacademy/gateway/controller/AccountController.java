@@ -63,15 +63,4 @@ public class AccountController {
         return "index";
     }
 
-    public String matchesAccount(@RequestBody LoginRequest loginRequest) {
-
-        UserAuthDto userAuthDto = accountAdaptor.matchesAccount(loginRequest);
-
-        if (userAuthDto.isLoginUser()) {
-            return "/account/home";
-        } else {
-            return "redirect:/account/loginForm";
-        }
-    }
-
 }
