@@ -25,18 +25,18 @@ public class AccountAdaptor {
     private final RestTemplate restTemplate;
     private final AccountAdaptorProperties accountAdaptorProperties;
 
-    public List<UserResponse> getAccounts(String userId) {
-        ResponseEntity<List<UserResponse>> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/",
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<>() {
-                        });
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
-            throw new RuntimeException();
-        }
-        return responseEntity.getBody();
-    }
+//    public List<UserResponse> getAccounts(String userId) {
+//        ResponseEntity<List<UserResponse>> responseEntity =
+//                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user",
+//                        HttpMethod.GET,
+//                        null,
+//                        new ParameterizedTypeReference<>() {
+//                        });
+//        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+//            throw new RuntimeException();
+//        }
+//        return responseEntity.getBody();
+//    }
 
     public UserResponse getAccount(String userId) {
         ResponseEntity<UserResponse>
@@ -57,7 +57,7 @@ public class AccountAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserRegisterRequest> requestHttpEntity = new HttpEntity<>(userRegisterRequest, headers);
         ResponseEntity<UserResponse> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user", HttpMethod.POST,
                         requestHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
@@ -68,12 +68,13 @@ public class AccountAdaptor {
         return responseEntity.getBody();
     }
 
-    public UserResponse modifyAccount(UserModifyRequest userModifyRequest) {
+    public UserResponse modifyAccount(String userId, UserModifyRequest userModifyRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserModifyRequest> requestHttpEntity = new HttpEntity<>(userModifyRequest, headers);
         ResponseEntity<UserResponse> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.PUT, requestHttpEntity,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/" + userId, HttpMethod.PUT,
+                        requestHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
 
@@ -103,7 +104,8 @@ public class AccountAdaptor {
 
         HttpEntity<LoginRequest> userAuthDtoHttpEntity = new HttpEntity<>(loginRequest, headers);
         ResponseEntity<UserAuthDto> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST, userAuthDtoHttpEntity,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST,
+                        userAuthDtoHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
 
