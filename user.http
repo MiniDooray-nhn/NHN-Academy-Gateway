@@ -1,0 +1,26 @@
+### /users
+GET http://localhost:8080/users/1
+
+### /users
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "id": "testId3asdasd3",
+  "password": "testPass",
+  "email": "testEmail",
+  "name": "testName"
+}
+
+### /users/{userId}
+DELETE http://localhost:8080/users/testId3asdasd3
+
+### /users/{userId}
+PUT http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "email": "fd zz",
+  "password": "!!@#",
+  "name": "asdasdasd"
+}

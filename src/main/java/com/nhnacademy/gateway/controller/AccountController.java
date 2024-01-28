@@ -15,38 +15,52 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//@RequestMapping("/accounts")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountAdaptor accountAdaptor;
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/{id}")
     public String getAccount(@PathVariable("id") String userId, Model model) {
 
         UserResponse userResponse = accountAdaptor.getAccount(userId);
         model.addAttribute("account", userResponse);
 
-        return "/account/home";
+        return "index";
     }
 
-    @PostMapping("/accounts/{id}")
+
+    @GetMapping
+    public String createAccountForm() {
+        return "account/userSignupForm";
+    }
+
+
+    @PostMapping
     public String createAccount(@RequestBody UserRegisterRequest userRegisterRequest) {
         accountAdaptor.createAccount(userRegisterRequest);
-        return "/account/loginForm";
+        return "index";
     }
 
-    @DeleteMapping("/accounts/{id}")
+    @DeleteMapping("/{id}")
     public String deleteAccount(@PathVariable("id") String userId) {
         accountAdaptor.deleteAccount(userId);
-        return "/account/loginForm";
+        return "index";
     }
 
-    @PutMapping("/accunts/{id}")
-    public String updateAccount(@RequestBody UserModifyRequest userModifyRequest) {
-        accountAdaptor.modifyAccount(userModifyRequest);
-        return "/account/userModifyForm";
+    @GetMapping("/modifyForm")
+    public String modifyForm() {
+        return "account/userModifyForm";
+    }
+
+    @PutMapping("/{userId}")
+    public String updateAccount(@RequestBody UserModifyRequest userModifyRequest
+            , @PathVariable(name = "userId") String userId) {
+        accountAdaptor.modifyAccount(userId, userModifyRequest);
+        return "index";
     }
 
     public String matchesAccount(@RequestBody LoginRequest loginRequest) {
