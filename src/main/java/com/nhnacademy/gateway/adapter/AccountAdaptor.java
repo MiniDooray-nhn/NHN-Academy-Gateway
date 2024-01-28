@@ -62,7 +62,7 @@ public class AccountAdaptor {
                         new ParameterizedTypeReference<>() {
                         });
 
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+        if (responseEntity.getStatusCode() != HttpStatus.CREATED) {
             throw new RuntimeException();
         }
         return responseEntity.getBody();
@@ -73,7 +73,7 @@ public class AccountAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserModifyRequest> requestHttpEntity = new HttpEntity<>(userModifyRequest, headers);
         ResponseEntity<UserResponse> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.PUT, null,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.PUT, requestHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
 
@@ -103,7 +103,7 @@ public class AccountAdaptor {
 
         HttpEntity<LoginRequest> userAuthDtoHttpEntity = new HttpEntity<>(loginRequest, headers);
         ResponseEntity<UserAuthDto> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST, null,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST, userAuthDtoHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
 
