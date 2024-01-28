@@ -1,17 +1,22 @@
 package com.nhnacademy.gateway.adapter;
 
 import com.nhnacademy.gateway.config.AccountAdaptorProperties;
+import com.nhnacademy.gateway.dto.account.DeleteResponse;
+import com.nhnacademy.gateway.dto.account.LoginRequest;
 import com.nhnacademy.gateway.dto.account.UserAuthDto;
 import com.nhnacademy.gateway.dto.account.UserModifyRequest;
 import com.nhnacademy.gateway.dto.account.UserRegisterRequest;
 import com.nhnacademy.gateway.dto.account.UserResponse;
-import com.nhnacademy.gateway.dto.task.Account;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -20,8 +25,8 @@ public class AccountAdaptor {
     private final RestTemplate restTemplate;
     private final AccountAdaptorProperties accountAdaptorProperties;
 
-    public List<Account> getAccounts(String userId) {
-        ResponseEntity<List<Account>> responseEntity =
+    public List<UserResponse> getAccounts(String userId) {
+        ResponseEntity<List<UserResponse>> responseEntity =
                 restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/",
                         HttpMethod.GET,
                         null,
@@ -47,21 +52,23 @@ public class AccountAdaptor {
         return responseEntity.getBody();
     }
 
-    public void createAccount(UserRegisterRequest userRegisterRequest) {
+    public UserResponse createAccount(UserRegisterRequest userRegisterRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserRegisterRequest> requestHttpEntity = new HttpEntity<>(userRegisterRequest, headers);
         ResponseEntity<UserResponse> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST, requestHttpEntity,
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST,
+                        requestHttpEntity,
                         new ParameterizedTypeReference<>() {
                         });
 
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException();
         }
+        return responseEntity.getBody();
     }
 
-    public void modifyAccount(UserModifyRequest userModifyRequest){
+    public UserResponse modifyAccount(UserModifyRequest userModifyRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserModifyRequest> requestHttpEntity = new HttpEntity<>(userModifyRequest, headers);
@@ -70,34 +77,37 @@ public class AccountAdaptor {
                         new ParameterizedTypeReference<>() {
                         });
 
-        if(responseEntity.getStatusCode() != HttpStatus.OK){
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException();
         }
+        return responseEntity.getBody();
     }
 
-    public void deleteAccount(String userId){
+    public DeleteResponse deleteAccount(String userId) {
 
-        ResponseEntity<UserResponse> responseEntity =
-                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.DELETE, null,
+        ResponseEntity<DeleteResponse> responseEntity =
+                restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/" + userId, HttpMethod.DELETE,
+                        null,
                         new ParameterizedTypeReference<>() {
                         });
 
-        if(responseEntity.getStatusCode() != HttpStatus.OK){
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException();
         }
+        return responseEntity.getBody();
     }
 
-    public boolean matchesAccount(UserAuthDto userAuthDto){
+    public UserAuthDto matchesAccount(LoginRequest loginRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<UserAuthDto> userAuthDtoHttpEntity = new HttpEntity<>(userAuthDto, headers);
-        ResponseEntity<UserResponse> responseEntity =
+        HttpEntity<LoginRequest> userAuthDtoHttpEntity = new HttpEntity<>(loginRequest, headers);
+        ResponseEntity<UserAuthDto> responseEntity =
                 restTemplate.exchange(accountAdaptorProperties.getAddress() + "/user/", HttpMethod.POST, null,
                         new ParameterizedTypeReference<>() {
                         });
 
-        return responseEntity.getStatusCode().is2xxSuccessful(); // 성공 요청 판단
+        return responseEntity.getBody();
 
     }
 
